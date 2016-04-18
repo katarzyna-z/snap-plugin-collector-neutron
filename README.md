@@ -1,10 +1,12 @@
-# snap-plugin-collector-neutron
+# snap plugin collector - neutron
 
 snap plugin for collecting metrics from OpenStack Neutron module. 
 
 1. [Getting Started](#getting-started)
   * [System Requirements](#system-requirements)
+  * [Operating systems](#operating-systems)
   * [Installation](#installation)
+  * [Configuration and Usage](#configuration-and-usage)
 2. [Documentation](#documentation)
   * [Collected Metrics](#collected-metrics)
   * [Examples](#examples)
@@ -19,8 +21,11 @@ Plugin collects metrics by communicating with OpenStack by REST API using Networ
 It can be used locally on the OpenStack host or remotely communicating with the OpenStack host via HTTP(S).
 
 ### System Requirements
- - Linux
- - OpenStack deployment available
+ * OpenStack deployment available
+ 
+### Operating systems
+All OSs currently supported by snap:
+* Linux/amd64
 
 ### Installation
 #### Download neutron plugin binary:
@@ -28,6 +33,7 @@ You can get the pre-built binaries for your OS and architecture at snap's [Githu
 
 #### To build the plugin binary:
 Fork https://github.com/intelsdi-x/snap-plugin-collector-neutron
+
 Clone repo into `$GOPATH/src/github/intelsdi-x/`:
 ```
 $ git clone https://github.com/<yourGithubID>/snap-plugin-collector-neutron
@@ -38,28 +44,28 @@ $ make
 ```
 This builds the plugin in `/build/rootfs`
 
+### Configuration and Usage
+* Set up the [snap framework](https://github.com/intelsdi-x/snap/blob/master/README.md#getting-started).
+* Create Global Config, see description in [snap's Global Config] (https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/README.md#snaps-global-config).
+* Load the plugin and create a task, see example in [Examples](https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/README.md#examples).
+
+#### Suggestions
+* It is not recommended to set interval for task less than 20 seconds. This may lead to overloading Neutron API with requests.
+
+
 ## Documentation
 
 ### Collected Metrics
-This plugin has the ability to gather the following metrics:
-
-Namespace | Data Type | Description
-----------|-----------|-----------------------
-intel/openstack/neutron/\<tenant_name\>/networks_count | int64 | number of tenant networks
-intel/openstack/neutron/\<tenant_name\>/subnets_count  | int64 | number of tenant subnets
-intel/openstack/neutron/\<tenant_name\>/routers_count | int64 | number of tenant routers
-intel/openstack/neutron/\<tenant_name\>/ports_count | int64 | number of tenant ports
-intel/openstack/neutron/\<tenant_name\>/floatingips_count | int64 | number of tenant floating IPs
-intel/openstack-neutron/\<tenant_name\>/quotas_{floatingip,ikepolicy,ipsec_site_connection,ipsecpolicy,network, port,router,security_group,security_group_rule,subnet}  | int64 |  quotas for a tenant. 
+List of collected metrics is described in [METRICS.md](https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/METRICS.md).
 
 ### snap's Global Config
-Global configuration files are described in snap's documentation. You have to add section "neutron" in "collector" section and then specify following options:
+Global configuration files are described in [snap's documentation](https://github.com/intelsdi-x/snap/blob/master/docs/SNAPD_CONFIGURATION.md). You have to add section "neutron" in "collector" section and then specify following options:
 - `"openstack_auth_url"` - URL for OpenStack Identity endpoint (ex. `"http://127.0.0.1:5000/v2.0/"`)
 - `"openstack_user"` - user name used to authenticate (ex. `"admin"`)
 - `"openstack_password"`- password used to authenticate (ex. `"admin"`)
 - `"openstack_tenant"` - tenant name used to authenticate (ex. `"admin"`)
 
-Example global configuration file for snap-plugin-collector-neutron plugin (exemplary file in examples/cfg/cfg.json):
+Example global configuration file for snap-plugin-collector-neutron plugin (exemplary file in [examples/cfg/] (https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/examples/cfg/):
 
 ```
 {
@@ -89,10 +95,15 @@ Example global configuration file for snap-plugin-collector-neutron plugin (exem
 
 
 ### Examples
-It is not suggested to set interval below 20 seconds. This may lead to overloading OpenStack Identity service with authentication requests.
-
-
 Example running snap-plugin-collector-neutron plugin and writing data to a file.
+
+Make sure that your `$SNAP_PATH` is set, if not:
+```
+$ export SNAP_PATH=<snapDirectoryPath>/build
+```
+Other paths to files should be set according to your configuration, using a file you should indicate where it is located.
+
+Create Global Config, see example in [examples/cfg/] (https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/examples/cfg/).
 
 In one terminal window, open the snap daemon (in this case with logging set to 1,  trust disabled and global configuration saved in cfg.json ):
 ```
@@ -114,7 +125,7 @@ See available metrics for your system
 $ $SNAP_PATH/bin/snapctl metric list
 ```
 
-Create task manifest file to use snap-plugin-collector-neutron plugin (exemplary file in examples/tasks/task.json):
+Create a task manifest file to use snap-plugin-collector-cinder plugin (exemplary file in [examples/tasks/] (https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/examples/tasks/)):
 ```
 {
     "version": 1,
@@ -154,7 +165,7 @@ Create task manifest file to use snap-plugin-collector-neutron plugin (exemplary
 }
 ```
 
-Create task:
+Create a task:
 ```
 $ $SNAP_PATH/bin/snapctl task create -t examples/tasks/task.json
 ```
@@ -163,17 +174,19 @@ $ $SNAP_PATH/bin/snapctl task create -t examples/tasks/task.json
 There isn't a current roadmap for this plugin, but it is in active development. As we launch this plugin, we do not have any outstanding requirements for the next release.
 
 ## Community Support
-This repository is one of **many** plugins in **snap**, a powerful telemetry framework. See the full project at http://github.com/intelsdi-x/snap To reach out to other users, head to the [main framework](https://github.com/intelsdi-x/snap#community-support)
+This repository is one of **many** plugins in **snap**, a powerful telemetry framework. The full project is at http://github.com/intelsdi-x/snap.
+To reach out on other use cases, visit:
+* [snap Gitter channel](https://gitter.im/intelsdi-x/snap)
 
 ## Contributing
 We love contributions!
 
 There's more than one way to give back, from examples to blogs to code updates. See our recommended process in [CONTRIBUTING.md](CONTRIBUTING.md).
 
+And **thank you!** Your contribution, through code and participation, is incredibly important to us.
+
 ## License
 [snap](http://github.com/intelsdi-x/snap), along with this plugin, is an Open Source software released under the Apache 2.0 [License](LICENSE).
 
 ## Acknowledgements
 * Author: [Katarzyna Zabrocka](https://github.com/katarzyna-z)
-
-And **thank you!** Your contribution, through code and participation, is incredibly important to us.
