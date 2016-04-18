@@ -125,7 +125,7 @@ See available metrics for your system
 $ $SNAP_PATH/bin/snapctl metric list
 ```
 
-Create a task manifest file to use snap-plugin-collector-cinder plugin (exemplary file in [examples/tasks/] (https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/examples/tasks/)):
+Create a task manifest file to use snap-plugin-collector-neutron plugin (exemplary file in [examples/tasks/] (https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/examples/tasks/)):
 ```
 {
     "version": 1,
