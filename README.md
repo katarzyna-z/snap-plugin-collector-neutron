@@ -70,13 +70,7 @@ Example global configuration file for snap-plugin-collector-neutron plugin (exem
 ```
 {
   "control": {
-    "cache_ttl": "5s"
-  },
-  "scheduler": {
-    "default_deadline": "5s",
-    "worker_pool_size": 5
-  },
-  "plugins": {
+    "plugins": {
     "collector": {
       "neutron": {
         "all": {
@@ -89,6 +83,7 @@ Example global configuration file for snap-plugin-collector-neutron plugin (exem
     },
     "publisher": {},
     "processor": {}
+  }
   }
 }
 ```

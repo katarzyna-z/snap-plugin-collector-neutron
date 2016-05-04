@@ -23,7 +23,6 @@ package collector
 
 import (
 	"fmt"
-	"os"
 	"strings"
 	"sync"
 	"time"
@@ -35,13 +34,14 @@ import (
 	"github.com/intelsdi-x/snap-plugin-utilities/config"
 	"github.com/intelsdi-x/snap/control/plugin"
 	"github.com/intelsdi-x/snap/control/plugin/cpolicy"
+	"github.com/intelsdi-x/snap/core"
 	"github.com/intelsdi-x/snap/core/serror"
 	"github.com/rackspace/gophercloud"
 )
 
 const (
 	// version of neutron plugin
-	version = 1
+	version = 2
 
 	//vendor namespace part
 	vendor = "intel"
@@ -107,17 +107,80 @@ var neutronConstMetrics = []string{
 	floatingipsCountMetric,
 }
 
-//cfgParams slice of configuration variables
-var cfgParams = []string{
-	cfgURL,
-	cfgUser,
-	cfgPassword,
-	cfgTenant,
+//neutronInfoFields contains information (description and unit) about metrics
+var neutronInfoFields = map[string]infoFields{
+	networksCountMetric: infoFields{
+		description: "number of tenant networks",
+		unit:        "",
+	},
+	subnetsCountMetric: infoFields{
+		description: "number of tenant subnets",
+		unit:        "",
+	},
+	routersCountMetric: infoFields{
+		description: "number of tenant routers",
+		unit:        "",
+	},
+	portsCountMetric: infoFields{
+		description: "number of tenant ports",
+		unit:        "",
+	},
+	floatingipsCountMetric: infoFields{
+		description: "number of tenant floating IPs",
+		unit:        "",
+	},
+	quotas + "floatingip": infoFields{
+		description: "number of floating IP addresses allowed for a tenant ( -1 means no limit)",
+		unit:        "",
+	},
+	quotas + "ikepolicy": infoFields{
+		description: "number of IKE policies allowed for a tenant",
+		unit:        "",
+	},
+	quotas + "ipsec_site_connection": infoFields{
+		description: "number of IPSec connections allowed for a tenant",
+		unit:        "",
+	},
+	quotas + "ipsecpolicy": infoFields{
+		description: "number of IPSec policies allowed for a tenant",
+		unit:        "",
+	},
+	quotas + "network": infoFields{
+		description: "number of networks allowed for a tenant",
+		unit:        "",
+	},
+	quotas + "port": infoFields{
+		description: "number of ports allowed for a tenant",
+		unit:        "",
+	},
+	quotas + "rbac_policy": infoFields{
+		description: "number of role-based access control (RBAC) policies for a tenant",
+		unit:        "",
+	},
+	quotas + "router": infoFields{
+		description: "number of routers allowed for a tenant",
+		unit:        "",
+	},
+	quotas + "security_group": infoFields{
+		description: "number of security groups allowed for a tenant",
+		unit:        "",
+	},
+	quotas + "security_group_rule": infoFields{
+		description: "number of security group rules allowed for a tenant",
+		unit:        "",
+	},
+	quotas + "subnet": infoFields{
+		description: "number of subnets allowed for a tenant",
+		unit:        "",
+	},
+	quotas + "subnetpool": infoFields{
+		description: "number of subnet pools allowed for a tenant",
+		unit:        "",
+	},
 }
 
 //Collector neutron plugin struct
 type Collector struct {
-	host     string
 	provider *gophercloud.ProviderClient
 }
 
@@ -135,18 +198,14 @@ func Meta() *plugin.PluginMeta {
 
 // New creates initialized instance of Glance collector
 func New() *Collector {
-	host, err := os.Hostname()
-	if err != nil {
-		host = "localhost"
-	}
-	return &Collector{host: host}
+	return &Collector{}
 }
 
 // GetMetricTypes returns list of available metric types
 // It returns error in case retrieval was not successful
-func (c *Collector) GetMetricTypes(cfg plugin.PluginConfigType) ([]plugin.PluginMetricType, error) {
-	mts := []plugin.PluginMetricType{}
-	items, err := config.GetConfigItems(cfg, cfgParams)
+func (c *Collector) GetMetricTypes(cfg plugin.ConfigType) ([]plugin.MetricType, error) {
+	mts := []plugin.MetricType{}
+	items, err := config.GetConfigItems(cfg, cfgURL, cfgUser, cfgPassword, cfgTenant)
 	if err != nil {
 		return nil, err
 	}
@@ -188,16 +247,23 @@ func (c *Collector) GetMetricTypes(cfg plugin.PluginConfigType) ([]plugin.Plugin
 		}
 
 		for k := range q {
-			mts = append(mts, plugin.PluginMetricType{
-				Namespace_: []string{vendor, openstack, pluginName, tenant.Name, quotas + k},
-				Config_:    cfg.ConfigDataNode,
+			info := getInfoFields(quotas + k)
+			mts = append(mts, plugin.MetricType{
+
+				Namespace_:   core.NewNamespace(vendor, openstack, pluginName, tenant.Name, quotas+k),
+				Config_:      cfg.ConfigDataNode,
+				Description_: info.description,
+				Unit_:        info.unit,
 			})
 		}
 
 		for m := range neutronConstMetrics {
-			mts = append(mts, plugin.PluginMetricType{
-				Namespace_: []string{vendor, openstack, pluginName, tenant.Name, neutronConstMetrics[m]},
-				Config_:    cfg.ConfigDataNode,
+			info := getInfoFields(neutronConstMetrics[m])
+			mts = append(mts, plugin.MetricType{
+				Namespace_:   core.NewNamespace(vendor, openstack, pluginName, tenant.Name, neutronConstMetrics[m]),
+				Config_:      cfg.ConfigDataNode,
+				Description_: info.description,
+				Unit_:        info.unit,
 			})
 		}
 	}
@@ -206,8 +272,8 @@ func (c *Collector) GetMetricTypes(cfg plugin.PluginConfigType) ([]plugin.Plugin
 
 // CollectMetrics returns list of requested metric values
 // It returns error in case retrieval was not successful
-func (c *Collector) CollectMetrics(metricTypes []plugin.PluginMetricType) ([]plugin.PluginMetricType, error) {
-	items, err := config.GetConfigItems(metricTypes[0], cfgParams)
+func (c *Collector) CollectMetrics(metricTypes []plugin.MetricType) ([]plugin.MetricType, error) {
+	items, err := config.GetConfigItems(metricTypes[0], cfgURL, cfgUser, cfgPassword, cfgTenant)
 	if err != nil {
 		return nil, err
 	}
@@ -309,27 +375,26 @@ func (c *Collector) CollectMetrics(metricTypes []plugin.PluginMetricType) ([]plu
 
 	done.Wait()
 
-	metrics := []plugin.PluginMetricType{}
+	metrics := []plugin.MetricType{}
 	for _, metricType := range metricTypes {
-		namespace := metricType.Namespace()
 
+		namespace := metricType.Namespace()
 		if len(namespace) != nsLength {
-			f := map[string]interface{}{"namespace": "/" + strings.Join(namespace, "/")}
+			f := map[string]interface{}{"namespace": metricType.Namespace().String()}
 			serr := serror.New(fmt.Errorf("Incorrect namespace length"), f)
 			log.WithFields(serr.Fields()).Warn(serr.String())
 			continue
 		}
 
-		metric := plugin.PluginMetricType{
-			Source_:    c.host,
+		metric := plugin.MetricType{
 			Timestamp_: time.Now(),
 			Namespace_: namespace,
 		}
 
-		tenantName := namespace[tenantNameNSPartNumber]
+		tenantName := namespace[tenantNameNSPartNumber].Value
 		var val int64
 		var ok bool
-		switch namespace[metricNameNSPartNumber] {
+		switch namespace[metricNameNSPartNumber].Value {
 		case networksCountMetric:
 			val, ok = tenantNetworks[tenantName]
 		case subnetsCountMetric:
@@ -342,19 +407,19 @@ func (c *Collector) CollectMetrics(metricTypes []plugin.PluginMetricType) ([]plu
 			val, ok = tenantFloatingips[tenantName]
 		default:
 
-			if !strings.HasPrefix(namespace[metricNameNSPartNumber], quotas) {
-				f := map[string]interface{}{"namespace": "/" + strings.Join(namespace, "/")}
+			if !strings.HasPrefix(namespace[metricNameNSPartNumber].Value, quotas) {
+				f := map[string]interface{}{"namespace": "/" + metricType.Namespace().String()}
 				serr := serror.New(fmt.Errorf("Incorrect namespace, prefix '%s' is desired", quotas), f)
 				log.WithFields(serr.Fields()).Warn(serr.String())
 				continue
 			}
 
-			quotaName := namespace[metricNameNSPartNumber][len(quotas):]
+			quotaName := namespace[metricNameNSPartNumber].Value[len(quotas):]
 			val, ok = tenantQuotasList[tenantName][quotaName]
 		}
 
 		if !ok {
-			f := map[string]interface{}{"namespace": "/" + strings.Join(namespace, "/"), "tenantName": tenantName}
+			f := map[string]interface{}{"namespace": metricType.Namespace().String(), "tenantName": tenantName}
 			serr := serror.New(fmt.Errorf("Incorrect namespace, metric with specified namespace does not exist"), f)
 			log.WithFields(serr.Fields()).Warn(serr.String())
 			continue
@@ -401,4 +466,17 @@ func (c *Collector) GetConfigPolicy() (*cpolicy.ConfigPolicy, error) {
 
 	cp.Add([]string{""}, config)
 	return cp, nil
+}
+
+func getInfoFields(metric string) infoFields {
+	info, ok := neutronInfoFields[metric]
+	if !ok {
+		info = infoFields{description: "", unit: ""}
+	}
+	return info
+}
+
+type infoFields struct {
+	description string
+	unit        string
 }

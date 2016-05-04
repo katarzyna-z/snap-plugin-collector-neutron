@@ -24,12 +24,12 @@ package collector
 import (
 	"fmt"
 	"net/http"
-	"strings"
 	"testing"
 
-	str "github.com/intelsdi-x/snap-plugin-utilities/strings"
+	"github.com/intelsdi-x/snap-plugin-utilities/str"
 	"github.com/intelsdi-x/snap/control/plugin"
 	"github.com/intelsdi-x/snap/control/plugin/cpolicy"
+	"github.com/intelsdi-x/snap/core"
 	"github.com/intelsdi-x/snap/core/cdata"
 	"github.com/intelsdi-x/snap/core/ctypes"
 	th "github.com/rackspace/gophercloud/testhelper"
@@ -80,68 +80,68 @@ func (s *TestSuite) TestGetMetricTypes() {
 		Convey("and proper metric types are returned", func() {
 			metricNames := []string{}
 			for _, m := range mts {
-				metricNames = append(metricNames, strings.Join(m.Namespace(), "/"))
+				metricNames = append(metricNames, m.Namespace().String())
 			}
 
 			So(len(mts), ShouldEqual, 28)
 
-			ns := strings.Join([]string{vendor, openstack, pluginName, "admin", networksCountMetric}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", subnetsCountMetric}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", routersCountMetric}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", portsCountMetric}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", floatingipsCountMetric}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", quotas + "subnet"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", quotas + "network"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", quotas + "floatingip"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", quotas + "subnetpool"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", quotas + "security_group_rule"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", quotas + "security_group"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", quotas + "router"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", quotas + "rbac_policy"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "admin", quotas + "port"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
+			ns := core.NewNamespace(vendor, openstack, pluginName, "admin", networksCountMetric)
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", subnetsCountMetric)
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", routersCountMetric)
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", portsCountMetric)
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", floatingipsCountMetric)
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"subnet")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"network")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"floatingip")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"subnetpool")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"security_group_rule")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"security_group")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"router")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"rbac_policy")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"port")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
 
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", networksCountMetric}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", subnetsCountMetric}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", routersCountMetric}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", portsCountMetric}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", floatingipsCountMetric}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", quotas + "subnet"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", quotas + "network"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", quotas + "floatingip"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", quotas + "subnetpool"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", quotas + "security_group_rule"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", quotas + "security_group"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", quotas + "router"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", quotas + "rbac_policy"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
-			ns = strings.Join([]string{vendor, openstack, pluginName, "demo", quotas + "port"}, "/")
-			So(str.Contains(metricNames, ns), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", networksCountMetric)
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", subnetsCountMetric)
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", routersCountMetric)
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", portsCountMetric)
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", floatingipsCountMetric)
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"subnet")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"network")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"floatingip")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"subnetpool")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"security_group_rule")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"security_group")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"router")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"rbac_policy")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
+			ns = core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"port")
+			So(str.Contains(metricNames, ns.String()), ShouldBeTrue)
 		})
 	})
 }
@@ -150,67 +150,67 @@ func (s *TestSuite) TestCollectMetrics() {
 	Convey("Given set of metric types", s.T(), func() {
 		cfg := setupCfg(th.Endpoint(), "admin", "secret", "admin")
 
-		ns1 := []string{vendor, openstack, pluginName, "admin", networksCountMetric}
-		ns2 := []string{vendor, openstack, pluginName, "admin", subnetsCountMetric}
-		ns3 := []string{vendor, openstack, pluginName, "admin", routersCountMetric}
-		ns4 := []string{vendor, openstack, pluginName, "admin", portsCountMetric}
-		ns5 := []string{vendor, openstack, pluginName, "admin", floatingipsCountMetric}
-		ns6 := []string{vendor, openstack, pluginName, "admin", quotas + "subnet"}
-		ns7 := []string{vendor, openstack, pluginName, "admin", quotas + "network"}
-		ns8 := []string{vendor, openstack, pluginName, "admin", quotas + "floatingip"}
-		ns9 := []string{vendor, openstack, pluginName, "admin", quotas + "subnetpool"}
-		ns10 := []string{vendor, openstack, pluginName, "admin", quotas + "security_group_rule"}
-		ns11 := []string{vendor, openstack, pluginName, "admin", quotas + "security_group"}
-		ns12 := []string{vendor, openstack, pluginName, "admin", quotas + "router"}
-		ns13 := []string{vendor, openstack, pluginName, "admin", quotas + "rbac_policy"}
-		ns14 := []string{vendor, openstack, pluginName, "admin", quotas + "port"}
+		ns1 := core.NewNamespace(vendor, openstack, pluginName, "admin", networksCountMetric)
+		ns2 := core.NewNamespace(vendor, openstack, pluginName, "admin", subnetsCountMetric)
+		ns3 := core.NewNamespace(vendor, openstack, pluginName, "admin", routersCountMetric)
+		ns4 := core.NewNamespace(vendor, openstack, pluginName, "admin", portsCountMetric)
+		ns5 := core.NewNamespace(vendor, openstack, pluginName, "admin", floatingipsCountMetric)
+		ns6 := core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"subnet")
+		ns7 := core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"network")
+		ns8 := core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"floatingip")
+		ns9 := core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"subnetpool")
+		ns10 := core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"security_group_rule")
+		ns11 := core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"security_group")
+		ns12 := core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"router")
+		ns13 := core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"rbac_policy")
+		ns14 := core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"port")
 
-		ns15 := []string{vendor, openstack, pluginName, "demo", networksCountMetric}
-		ns16 := []string{vendor, openstack, pluginName, "demo", subnetsCountMetric}
-		ns17 := []string{vendor, openstack, pluginName, "demo", routersCountMetric}
-		ns18 := []string{vendor, openstack, pluginName, "demo", portsCountMetric}
-		ns19 := []string{vendor, openstack, pluginName, "demo", floatingipsCountMetric}
-		ns20 := []string{vendor, openstack, pluginName, "demo", quotas + "subnet"}
-		ns21 := []string{vendor, openstack, pluginName, "demo", quotas + "network"}
-		ns22 := []string{vendor, openstack, pluginName, "demo", quotas + "floatingip"}
-		ns23 := []string{vendor, openstack, pluginName, "demo", quotas + "subnetpool"}
-		ns24 := []string{vendor, openstack, pluginName, "demo", quotas + "security_group_rule"}
-		ns25 := []string{vendor, openstack, pluginName, "demo", quotas + "security_group"}
-		ns26 := []string{vendor, openstack, pluginName, "demo", quotas + "router"}
-		ns27 := []string{vendor, openstack, pluginName, "demo", quotas + "rbac_policy"}
-		ns28 := []string{vendor, openstack, pluginName, "demo", quotas + "port"}
+		ns15 := core.NewNamespace(vendor, openstack, pluginName, "demo", networksCountMetric)
+		ns16 := core.NewNamespace(vendor, openstack, pluginName, "demo", subnetsCountMetric)
+		ns17 := core.NewNamespace(vendor, openstack, pluginName, "demo", routersCountMetric)
+		ns18 := core.NewNamespace(vendor, openstack, pluginName, "demo", portsCountMetric)
+		ns19 := core.NewNamespace(vendor, openstack, pluginName, "demo", floatingipsCountMetric)
+		ns20 := core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"subnet")
+		ns21 := core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"network")
+		ns22 := core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"floatingip")
+		ns23 := core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"subnetpool")
+		ns24 := core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"security_group_rule")
+		ns25 := core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"security_group")
+		ns26 := core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"router")
+		ns27 := core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"rbac_policy")
+		ns28 := core.NewNamespace(vendor, openstack, pluginName, "demo", quotas+"port")
 
-		mTypes := []plugin.PluginMetricType{
-			plugin.PluginMetricType{Namespace_: ns1, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns2, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns3, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns4, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns5, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns6, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns7, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns8, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns9, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns10, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns11, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns12, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns13, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns14, Config_: cfg.ConfigDataNode},
+		mTypes := []plugin.MetricType{
+			plugin.MetricType{Namespace_: ns1, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns2, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns3, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns4, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns5, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns6, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns7, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns8, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns9, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns10, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns11, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns12, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns13, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns14, Config_: cfg.ConfigDataNode},
 
-			plugin.PluginMetricType{Namespace_: ns15, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns15, Config_: cfg.ConfigDataNode},
 
-			plugin.PluginMetricType{Namespace_: ns16, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns17, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns18, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns19, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns20, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns21, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns22, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns23, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns24, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns25, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns26, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns27, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns28, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns16, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns17, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns18, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns19, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns20, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns21, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns22, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns23, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns24, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns25, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns26, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns27, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns28, Config_: cfg.ConfigDataNode},
 		}
 
 		Convey("When ColelctMetrics() is called", func() {
@@ -231,189 +231,189 @@ func (s *TestSuite) TestCollectMetrics() {
 
 				metricNames := map[string]interface{}{}
 				for _, m := range mts {
-					ns := strings.Join(m.Namespace(), "/")
+					ns := m.Namespace().String()
 					metricNames[ns] = m.Data()
 				}
 
 				So(len(mts), ShouldEqual, 28)
 
 				//networks_count
-				val, ok := metricNames[strings.Join(ns1, "/")]
+				val, ok := metricNames[ns1.String()]
 				So(ok, ShouldBeTrue)
 				v, ok := val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 2)
 
-				val, ok = metricNames[strings.Join(ns15, "/")]
+				val, ok = metricNames[ns15.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 1)
 
 				//subnets_counts
-				val, ok = metricNames[strings.Join(ns2, "/")]
+				val, ok = metricNames[ns2.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 3)
 
-				val, ok = metricNames[strings.Join(ns16, "/")]
+				val, ok = metricNames[ns16.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 0)
 
 				//routers_count
-				val, ok = metricNames[strings.Join(ns3, "/")]
+				val, ok = metricNames[ns3.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 4)
 
-				val, ok = metricNames[strings.Join(ns17, "/")]
+				val, ok = metricNames[ns17.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 0)
 
 				//ports_count
-				val, ok = metricNames[strings.Join(ns4, "/")]
+				val, ok = metricNames[ns4.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 3)
 
-				val, ok = metricNames[strings.Join(ns18, "/")]
+				val, ok = metricNames[ns18.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 0)
 
 				//floatingips_count
-				val, ok = metricNames[strings.Join(ns5, "/")]
+				val, ok = metricNames[ns5.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 2)
 
-				val, ok = metricNames[strings.Join(ns19, "/")]
+				val, ok = metricNames[ns19.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 0)
 
 				//quotas_subnet
-				val, ok = metricNames[strings.Join(ns6, "/")]
+				val, ok = metricNames[ns6.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 10)
 
-				val, ok = metricNames[strings.Join(ns20, "/")]
+				val, ok = metricNames[ns20.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 11)
 
 				//quotas_network
-				val, ok = metricNames[strings.Join(ns7, "/")]
+				val, ok = metricNames[ns7.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 13)
 
-				val, ok = metricNames[strings.Join(ns21, "/")]
+				val, ok = metricNames[ns21.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 12)
 
 				//quotas_floatingip
-				val, ok = metricNames[strings.Join(ns8, "/")]
+				val, ok = metricNames[ns8.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 50)
 
-				val, ok = metricNames[strings.Join(ns22, "/")]
+				val, ok = metricNames[ns22.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 51)
 
 				//quotas_subnetpool
-				val, ok = metricNames[strings.Join(ns9, "/")]
+				val, ok = metricNames[ns9.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, -1)
 
-				val, ok = metricNames[strings.Join(ns23, "/")]
+				val, ok = metricNames[ns23.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 0)
 
 				//quotas_security_group_rule
-				val, ok = metricNames[strings.Join(ns10, "/")]
+				val, ok = metricNames[ns10.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 100)
 
-				val, ok = metricNames[strings.Join(ns24, "/")]
+				val, ok = metricNames[ns24.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 101)
 
 				//quotas_security_group
-				val, ok = metricNames[strings.Join(ns11, "/")]
+				val, ok = metricNames[ns11.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 10)
 
-				val, ok = metricNames[strings.Join(ns25, "/")]
+				val, ok = metricNames[ns25.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 11)
 
 				//quotas_router
-				val, ok = metricNames[strings.Join(ns12, "/")]
+				val, ok = metricNames[ns12.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 15)
 
-				val, ok = metricNames[strings.Join(ns26, "/")]
+				val, ok = metricNames[ns26.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 16)
 
 				//quotas_rbac_policy
-				val, ok = metricNames[strings.Join(ns13, "/")]
+				val, ok = metricNames[ns13.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, -1)
 
-				val, ok = metricNames[strings.Join(ns27, "/")]
+				val, ok = metricNames[ns27.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 0)
 
 				//quotas_port
-				val, ok = metricNames[strings.Join(ns14, "/")]
+				val, ok = metricNames[ns14.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
 				So(v, ShouldEqual, 50)
 
-				val, ok = metricNames[strings.Join(ns28, "/")]
+				val, ok = metricNames[ns28.String()]
 				So(ok, ShouldBeTrue)
 				v, ok = val.(int64)
 				So(ok, ShouldBeTrue)
@@ -424,15 +424,15 @@ func (s *TestSuite) TestCollectMetrics() {
 
 	Convey("Given set of incorrec metric types", s.T(), func() {
 		cfg := setupCfg(th.Endpoint(), "admin", "secret", "admin")
-		ns1 := []string{vendor, openstack, pluginName, "admin123", networksCountMetric}
-		ns2 := []string{vendor, openstack, pluginName, "admin123", networksCountMetric, "test"}
-		ns3 := []string{vendor, openstack, pluginName, "admin", "test"}
-		ns4 := []string{vendor, openstack, pluginName, "admin", quotas + "test"}
-		mTypes := []plugin.PluginMetricType{
-			plugin.PluginMetricType{Namespace_: ns1, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns2, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns3, Config_: cfg.ConfigDataNode},
-			plugin.PluginMetricType{Namespace_: ns4, Config_: cfg.ConfigDataNode},
+		ns1 := core.NewNamespace(vendor, openstack, pluginName, "admin123", networksCountMetric)
+		ns2 := core.NewNamespace(vendor, openstack, pluginName, "admin123", networksCountMetric, "test")
+		ns3 := core.NewNamespace(vendor, openstack, pluginName, "admin", "test")
+		ns4 := core.NewNamespace(vendor, openstack, pluginName, "admin", quotas+"test")
+		mTypes := []plugin.MetricType{
+			plugin.MetricType{Namespace_: ns1, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns2, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns3, Config_: cfg.ConfigDataNode},
+			plugin.MetricType{Namespace_: ns4, Config_: cfg.ConfigDataNode},
 		}
 
 		Convey("When ColelctMetrics() is called", func() {
@@ -530,13 +530,13 @@ func (s *TestSuite) TestGetConfigPolicy() {
 	})
 }
 
-func setupCfg(endpoint, user, password, tenant string) plugin.PluginConfigType {
+func setupCfg(endpoint, user, password, tenant string) plugin.ConfigType {
 	node := cdata.NewNode()
 	node.AddItem(cfgURL, ctypes.ConfigValueStr{Value: endpoint})
 	node.AddItem(cfgUser, ctypes.ConfigValueStr{Value: user})
 	node.AddItem(cfgPassword, ctypes.ConfigValueStr{Value: password})
 	node.AddItem(cfgTenant, ctypes.ConfigValueStr{Value: tenant})
-	return plugin.PluginConfigType{ConfigDataNode: node}
+	return plugin.ConfigType{ConfigDataNode: node}
 }
 
 func registerRoot() {
