@@ -1,12 +1,6 @@
 {
   "control": {
-    "cache_ttl": "5s"
-  },
-  "scheduler": {
-    "default_deadline": "5s",
-    "worker_pool_size": 5
-  },
-  "plugins": {
+    "plugins": {
     "collector": {
       "neutron": {
         "all": {
@@ -19,5 +13,6 @@
     },
     "publisher": {},
     "processor": {}
+  }
   }
 }
