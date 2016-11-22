@@ -58,7 +58,7 @@ This builds the plugin in `./build`
 List of collected metrics is described in [METRICS.md](https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/METRICS.md).
 
 ### snap's Global Config
-Global configuration files are described in [Snap's documentation](https://github.com/intelsdi-x/snap/blob/master/docs/SNAPD_CONFIGURATION.md). You have to add section "neutron" in "collector" section and then specify following options:
+Global configuration files are described in [Snap's documentation](https://github.com/intelsdi-x/snap/blob/master/docs/SNAPTELD_CONFIGURATION.md). You have to add section "neutron" in "collector" section and then specify following options:
 - `"openstack_auth_url"` - URL for OpenStack Identity endpoint (ex. `"http://127.0.0.1:5000/v2.0/"`)
 - `"openstack_user"` - user name used to authenticate (ex. `"admin"`)
 - `"openstack_password"`- password used to authenticate (ex. `"admin"`)
@@ -94,9 +94,9 @@ Example running snap-plugin-collector-neutron plugin and writing data to a file 
 Create Global Config, see example in [examples/cfg/] (https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/examples/cfg/).
 
 Set up the [Snap framework](https://github.com/intelsdi-x/snap/blob/master/README.md#getting-started),
-in one terminal window, run `snapd` (in this case with logging set to 1, trust disabled and global configuration saved in cfg.json):
+in one terminal window, run `snapteld` (in this case with logging set to 1, trust disabled and global configuration saved in cfg.json):
 ```
-$ $SNAP_PATH/bin/snapd -l 1 -t 0 --config cfg.json
+$ $SNAP_PATH/bin/snapteld -l 1 -t 0 --config cfg.json
 ```
 
 In another terminal window:
@@ -105,14 +105,14 @@ Download and load Snap plugins:
 ```
 $ wget http://snap.ci.snap-telemetry.io/plugins/snap-plugin-collector-neutron/latest/linux/x86_64/snap-plugin-collector-neutron
 $ wget http://snap.ci.snap-telemetry.io/plugins/snap-plugin-publisher-file/latest/linux/x86_64/snap-plugin-publisher-file
-$ snapctl plugin load snap-plugin-collector-neutron
-$ snapctl plugin load snap-plugin-publisher-file
+$ snaptel plugin load snap-plugin-collector-neutron
+$ snaptel plugin load snap-plugin-publisher-file
 ```
 
 See available metrics for your system
 
 ```
-$ snapctl metric list
+$ snaptel metric list
 ```
 
 Create a [Task Manifest](https://github.com/intelsdi-x/snap/blob/master/docs/TASKS.md) file to use snap-plugin-collector-neutron plugin (exemplary file in [examples/tasks/] (https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/examples/tasks/)):
@@ -154,17 +154,17 @@ Create a [Task Manifest](https://github.com/intelsdi-x/snap/blob/master/docs/TAS
 
 Create a task:
 ```
-$ snapctl task create -t examples/tasks/task.json
+$ snaptel task create -t examples/tasks/task.json
 ```
 
 And watch the metrics populate:
 ```
-$ snapctl task watch <task_id>
+$ snaptel task watch <task_id>
 ```
 
 Stop previously created task:
 ```
-$ snapctl task stop <task_id>
+$ snaptel task stop <task_id>
 ```
 
 ### Roadmap
