@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "schedule": {
+    "type": "simple",
+    "interval": "10s"
+  },
+  "workflow": {
+    "collect": {
+      "metrics": {
+        "/intel/openstack/neutron/admin/networks_count": {},
+        "/intel/openstack/neutron/admin/subnets_count": {},
+        "/intel/openstack/neutron/admin/routers_count": {},
+        "/intel/openstack/neutron/admin/ports_count": {},
+        "/intel/openstack/neutron/admin/floatingips_count": {},
+        "/intel/openstack/neutron/admin/quotas_subnet": {},
+        "/intel/openstack/neutron/admin/quotas_network": {},
+        "/intel/openstack/neutron/admin/quotas_floatingip": {},
+        "/intel/openstack/neutron/admin/quotas_security_group_rule": {},
+        "/intel/openstack/neutron/admin/quotas_security_group": {},
+        "/intel/openstack/neutron/admin/quotas_router": {},
+        "/intel/openstack/neutron/admin/quotas_port": {}
+      },
+    "publish": [
+    {
+      "plugin_name": "influxdb",
+      "config": {
+        "host": "localhost",
+        "port": 8086,
+        "database": "test",
+        "user": "admin",
+        "password": "admin"
+      }
+    }]
+    }
+  }
+}
