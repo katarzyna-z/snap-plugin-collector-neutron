@@ -1,0 +1,30 @@
+package: github.com/intelsdi-x/snap-plugin-collector-neutron
+import:
+- package: github.com/Sirupsen/logrus
+- package: github.com/intelsdi-x/snap-plugin-utilities
+  subpackages:
+  - config
+- package: github.com/intelsdi-x/snap
+  version: ^0.18
+  subpackages:
+  - control/plugin
+  - control/plugin/cpolicy
+  - core
+  - core/serror
+- package: github.com/mitchellh/mapstructure
+- package: github.com/rackspace/gophercloud
+  subpackages:
+  - openstack
+  - openstack/identity/v2/tenants
+  - openstack/networking/v2/extensions/layer3/floatingips
+  - openstack/networking/v2/extensions/layer3/routers
+  - openstack/networking/v2/networks
+  - openstack/networking/v2/ports
+  - openstack/networking/v2/subnets
+testImport:
+- package: github.com/smartystreets/goconvey
+  subpackages:
+  - convey
+- package: github.com/stretchr/testify
+  subpackages:
+  - suite
