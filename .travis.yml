@@ -3,7 +3,7 @@ sudo: false
 language: go
 go:
 - 1.6.3
-- 1.7.1
+- 1.7.3
 env:
   global:
   - ORG_PATH=/home/travis/gopath/src/github.com/intelsdi-x
@@ -42,7 +42,7 @@ deploy:
   on:
     repo: intelsdi-x/snap-plugin-collector-neutron
     branch: master
-    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.1"
+    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.3"
 - provider: s3
   access_key_id: AKIAINMB43VSSPFZISAA
   secret_access_key:
@@ -56,7 +56,7 @@ deploy:
   on:
     repo: intelsdi-x/snap-plugin-collector-neutron
     tags: true
-    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.1"
+    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.3"
 - provider: releases
   api_key:
     secure: caIzCnzD8uEGDTpv1rTnVN4VoJTPDSwiA66JcmEFkPpUQM19NqhxeZ7qeuag9DTsC84AWuhFz0Ljdse913/23ehNUJ/q1gEx/+aONLWfQ7aYrvCdeRRxPZsQc5wpwChQzSb+raQgVdkWNoNcjhnqSd1YBk8C0dBlPS0sg/YY0bfoelmnEgCIxlzLVawESJJQwh95IhM6XgsnZxb04sjmxcJlEpShDylWrmFIkjrBN+lu4Z/GIRA1v3q/zp5oucUXmtbwr6ElYgdjZ9S5PDKvPJswM9O7GxAs+PyW0ueJLFVPZzn8wXvoUxgeCZ/jrvaNKqyyvejU7sKxerOY14WZyrAfKKhFAK9qRhkIuLAFLJkobk6vbwR1gscBI5UGp/qi/wElqJTh/wC+4ZMdB8DrjpWuGmj9jlAeDX0B8gmYHcTc4KqEHNlH6f2roOKkeKvk7FDCujATJxsCZ2mL0CFUBoADVqbAW3HWkoAmMcRVatGI/NRnsSfz/OoSfZ1DzOUWpIV4RuepRFobZahyTW/qe+t4myeC1thdSY6mabds/we2OgpPzuCEZeMO7cey6CHIj9HSJRWZbg0oAOp4NqRQtHZ3WKRuQFAfAePj2bhgIeN2PlKr+i9V+NwglMxwWegp90LDmDRx4IKw5bDDWhfLP7w087mxTs0nAQxCmy64PAs=
@@ -66,4 +66,4 @@ deploy:
   on:
     repo: intelsdi-x/snap-plugin-collector-neutron
     tags: true
-    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.1"
+    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.3"
