@@ -567,7 +567,7 @@ func registerRoot() {
 }
 
 func registerAuthentication(s *TestSuite) {
-	s.Token = "2ed210f132564f21b178afb197ee99e3"
+	s.Token = "cefb1b0ba45744488e6ed702db699327"
 	s.NetworkServiceEndpoint = th.Endpoint()
 	th.Mux.HandleFunc("/v2.0/tokens", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `
@@ -576,7 +576,7 @@ func registerAuthentication(s *TestSuite) {
 						"metadata": {
 							"is_admin": 0,
 							"roles": [
-								"3083d61996d648ca88d6ff420542f324"
+								"dc6ed0c1bfb847c9b087e1d62068766b"
 							]
 						},
 						"serviceCatalog": [
@@ -596,13 +596,13 @@ func registerAuthentication(s *TestSuite) {
 							}
 						],
 						"token": {
-							"expires": "2016-02-21T14:28:30Z",
+							"expires": "2017-01-19T15:33:11Z",
 							"id": "%s",
-							"issued_at": "2016-02-21T13:28:30.656527",
+							"issued_at": "2017-01-19T14:33:11.541197Z",
 							"tenant": {
-								"description": null,
+								"description": "",
 								"enabled": true,
-								"id": "97ea299c37bb4e04b3779039ea8aba44",
+								"id": "444f244be5e34ce0816e8beccfd332ef",
 								"name": "tenant"
 							}
 						}
@@ -627,7 +627,7 @@ func registerTenants(s *TestSuite) {
 			{
 				"tenants": [
 					{
-						"description": "Test tenat",
+						"description": "demo tenat",
 						"enabled": true,
 						"id": "111111",
 						"name": "demo"
@@ -655,43 +655,99 @@ func registerNetworks(s *TestSuite) {
 
 		fmt.Fprintf(w, `
 			{
-				"networks": [
-					{
-						"status": "ACTIVE",
-						"subnets": [
-							"54d6f61d-db07-451c-9ab3-b9609b6b6f0b"
-						],
-						"name": "private-network",
-						"admin_state_up": true,
-						"tenant_id": "111111",
-						"shared": true,
-						"id": "d32019d3-bc6e-4319-9c1d-6722fc136a21"
-					},
-					{
-						"status": "ACTIVE",
-						"subnets": [
-							"54d6f61d-db07-451c-9ab3-b9609b6b6f0b"
-						],
-						"name": "private-network",
-						"admin_state_up": true,
-						"tenant_id": "222222",
-						"shared": true,
-						"id": "d32019d3-bc6e-4319-9c1d-6722fc136a22"
-					},
-					{
-						"status": "ACTIVE",
-						"subnets": [
-							"08eae331-0402-425a-923c-34f7cfe39c1b"
-						],
-						"name": "private",
-						"admin_state_up": true,
-						"tenant_id": "222222",
-						"shared": true,
-						"id": "db193ab3-96e3-4cb3-8fc5-05f4296d0324"
-					}
-				]
+			  "networks": [
+			    {
+			      "admin_state_up": true,
+			      "availability_zone_hints": [],
+			      "availability_zones": [
+				"nova"
+			      ],
+			      "created_at": "2016-09-08T12:01:34",
+			      "description": "",
+			      "id": "28dd974d-0ec0-43cc-86ac-06773acb126f",
+			      "ipv4_address_scope": null,
+			      "ipv6_address_scope": null,
+			      "mtu": 1450,
+			      "name": "private",
+			      "port_security_enabled": true,
+			      "provider:network_type": "vxlan",
+			      "provider:physical_network": null,
+			      "provider:segmentation_id": 19,
+			      "revision": 6,
+			      "router:external": false,
+			      "shared": false,
+			      "status": "ACTIVE",
+			      "subnets": [
+				"ef512c07-9203-4121-9df6-e692a4bc84c5",
+				"64c8fbe0-cb8a-41d7-9e65-56f33f9674cb"
+			      ],
+			      "tags": [],
+			      "tenant_id": "111111",
+			      "updated_at": "2016-09-08T12:01:38"
+			    },
+			    {
+			      "admin_state_up": true,
+			      "availability_zone_hints": [],
+			      "availability_zones": [
+				"nova"
+			      ],
+			      "created_at": "2016-09-08T12:01:51",
+			      "description": "",
+			      "id": "f3722668-e9e7-41dd-8086-5e1b9f5d8209",
+			      "ipv4_address_scope": null,
+			      "ipv6_address_scope": null,
+			      "is_default": true,
+			      "mtu": 1500,
+			      "name": "public",
+			      "port_security_enabled": true,
+			      "provider:network_type": "flat",
+			      "provider:physical_network": "public",
+			      "provider:segmentation_id": null,
+			      "revision": 6,
+			      "router:external": true,
+			      "shared": false,
+			      "status": "ACTIVE",
+			      "subnets": [
+				"4582d819-7ded-4ec5-aa92-27f73781f625",
+				"94daf3aa-6faf-43c0-a21c-9656110b3d11"
+			      ],
+			      "tags": [],
+			      "tenant_id": "222222",
+			      "updated_at": "2016-09-08T12:02:05"
+			    },
+			    {
+			      "admin_state_up": true,
+			      "availability_zone_hints": [],
+			      "availability_zones": [
+				"nova"
+			      ],
+			      "created_at": "2016-09-08T12:01:51",
+			      "description": "",
+			      "id": "f3722668-e9e7-41dd-8086-5e1b9f5d8209",
+			      "ipv4_address_scope": null,
+			      "ipv6_address_scope": null,
+			      "is_default": true,
+			      "mtu": 1500,
+			      "name": "public",
+			      "port_security_enabled": true,
+			      "provider:network_type": "flat",
+			      "provider:physical_network": "public",
+			      "provider:segmentation_id": null,
+			      "revision": 6,
+			      "router:external": true,
+			      "shared": false,
+			      "status": "ACTIVE",
+			      "subnets": [
+				"4582d819-7ded-4ec5-aa92-27f73781f625",
+				"94daf3aa-6faf-43c0-a21c-9656110b3d11"
+			      ],
+			      "tags": [],
+			      "tenant_id": "222222",
+			      "updated_at": "2016-09-08T12:02:05"
+			    }
+			  ]
 			}
-			`)
+		`)
 	})
 }
 
@@ -704,64 +760,92 @@ func registerSubnets(s *TestSuite) {
 		w.WriteHeader(http.StatusOK)
 
 		fmt.Fprintf(w, `
-		{
-			"subnets": [
+			{
+			  "subnets": [
+			    {
+			      "allocation_pools": [
 				{
-					"name": "private-subnet",
-					"enable_dhcp": true,
-					"network_id": "db193ab3-96e3-4cb3-8fc5-05f4296d0324",
-					"tenant_id": "222222",
-					"dns_nameservers": [],
-					"allocation_pools": [
-						{
-							"start": "10.0.0.2",
-							"end": "10.0.0.254"
-						}
-					],
-					"host_routes": [],
-					"ip_version": 4,
-					"gateway_ip": "10.0.0.1",
-					"cidr": "10.0.0.0/24",
-					"id": "08eae331-0402-425a-923c-34f7cfe39c1b"
+				  "end": "2001:db8::1",
+				  "start": "2001:db8::1"
 				},
 				{
-					"name": "my_subnet",
-					"enable_dhcp": true,
-					"network_id": "d32019d3-bc6e-4319-9c1d-6722fc136a22",
-					"tenant_id": "222222",
-					"dns_nameservers": [],
-					"allocation_pools": [
-						{
-							"start": "192.0.0.2",
-							"end": "192.255.255.254"
-						}
-					],
-					"host_routes": [],
-					"ip_version": 4,
-					"gateway_ip": "192.0.0.1",
-					"cidr": "192.0.0.0/8",
-					"id": "54d6f61d-db07-451c-9ab3-b9609b6b6f0b"
-				},
-				{
-					"name": "my_subnet",
-					"enable_dhcp": true,
-					"network_id": "d32019d3-bc6e-4319-9c1d-6722fc136a22",
-					"tenant_id": "222222",
-					"dns_nameservers": [],
-					"allocation_pools": [
-						{
-							"start": "192.0.0.2",
-							"end": "192.255.255.254"
-						}
-					],
-					"host_routes": [],
-					"ip_version": 4,
-					"gateway_ip": "192.0.0.1",
-					"cidr": "192.0.0.0/8",
-					"id": "54d6f61d-db07-451c-9ab3-b9609b6b6f0c"
+				  "end": "2001:db8::ffff:ffff:ffff:ffff",
+				  "start": "2001:db8::3"
 				}
-			]
-		}
+			      ],
+			      "cidr": "2001:db8::/64",
+			      "created_at": "2016-09-08T12:02:05",
+			      "description": "",
+			      "dns_nameservers": [],
+			      "enable_dhcp": false,
+			      "gateway_ip": "2001:db8::2",
+			      "host_routes": [],
+			      "id": "4582d819-7ded-4ec5-aa92-27f73781f625",
+			      "ip_version": 6,
+			      "ipv6_address_mode": null,
+			      "ipv6_ra_mode": null,
+			      "name": "ipv6-public-subnet",
+			      "network_id": "f3722668-e9e7-41dd-8086-5e1b9f5d8209",
+			      "revision": 2,
+			      "service_types": [],
+			      "subnetpool_id": null,
+			      "tenant_id": "222222",
+			      "updated_at": "2016-09-08T12:02:05"
+			    },
+			    {
+			      "allocation_pools": [
+				{
+				  "end": "10.0.0.254",
+				  "start": "10.0.0.2"
+				}
+			      ],
+			      "cidr": "10.0.0.0/24",
+			      "created_at": "2016-09-08T12:01:36",
+			      "description": "",
+			      "dns_nameservers": [],
+			      "enable_dhcp": true,
+			      "gateway_ip": "10.0.0.1",
+			      "host_routes": [],
+			      "id": "64c8fbe0-cb8a-41d7-9e65-56f33f9674cb",
+			      "ip_version": 4,
+			      "ipv6_address_mode": null,
+			      "ipv6_ra_mode": null,
+			      "name": "private-subnet",
+			      "network_id": "28dd974d-0ec0-43cc-86ac-06773acb126f",
+			      "revision": 2,
+			      "service_types": [],
+			      "subnetpool_id": null,
+			      "tenant_id": "222222",
+			      "updated_at": "2016-09-08T12:01:36"
+			    },
+			    {
+			      "allocation_pools": [
+				{
+				  "end": "172.24.4.254",
+				  "start": "172.24.4.2"
+				}
+			      ],
+			      "cidr": "172.24.4.0/24",
+			      "created_at": "2016-09-08T12:01:56",
+			      "description": "",
+			      "dns_nameservers": [],
+			      "enable_dhcp": false,
+			      "gateway_ip": "172.24.4.1",
+			      "host_routes": [],
+			      "id": "94daf3aa-6faf-43c0-a21c-9656110b3d11",
+			      "ip_version": 4,
+			      "ipv6_address_mode": null,
+			      "ipv6_ra_mode": null,
+			      "name": "public-subnet",
+			      "network_id": "f3722668-e9e7-41dd-8086-5e1b9f5d8209",
+			      "revision": 2,
+			      "service_types": [],
+			      "subnetpool_id": null,
+			      "tenant_id": "222222",
+			      "updated_at": "2016-09-08T12:01:56"
+			    }
+			  ]
+			}
         `)
 	})
 }
@@ -775,52 +859,134 @@ func registerRouters(s *TestSuite) {
 		w.WriteHeader(http.StatusOK)
 
 		fmt.Fprintf(w, `
-		{
-			"routers": [
-				{
-					"status": "ACTIVE",
-					"external_gateway_info": null,
-					"name": "second_routers",
-					"admin_state_up": true,
-					"tenant_id": "222222",
-					"distributed": false,
-					"id": "7177abc4-5ae9-4bb7-b0d4-89e94a4abf3b"
-				},
-				{
-					"status": "ACTIVE",
-					"external_gateway_info": {
-						"network_id": "3c5bcddd-6af9-4e6b-9c3e-c153e521cab8"
-					},
-					"name": "router1",
-					"admin_state_up": true,
-					"tenant_id": "222222",
-					"distributed": false,
-					"id": "a9254bdb-2613-4a13-ac4c-adc581fba50d"
-				},
-				{
-					"status": "ACTIVE",
-					"external_gateway_info": {
-						"network_id": "3c5bcddd-6af9-4e6b-9c3e-c153e521cab8"
-					},
-					"name": "router1",
-					"admin_state_up": true,
-					"tenant_id": "222222",
-					"distributed": false,
-					"id": "a9254bdb-2613-4a13-ac4c-adc581fba50e"
-				},
-				{
-					"status": "ACTIVE",
-					"external_gateway_info": {
-						"network_id": "3c5bcddd-6af9-4e6b-9c3e-c153e521cabg"
-					},
-					"name": "router1",
-					"admin_state_up": true,
-					"tenant_id": "222222",
-					"distributed": false,
-					"id": "a9254bdb-2613-4a13-ac4c-adc581fba50f"
-				}
-			]
-		}
+			{
+			  "routers": [
+			    {
+			      "admin_state_up": true,
+			      "availability_zone_hints": [],
+			      "availability_zones": [
+				"nova"
+			      ],
+			      "description": "",
+			      "distributed": false,
+			      "external_gateway_info": {
+				"enable_snat": true,
+				"external_fixed_ips": [
+				  {
+				    "ip_address": "172.24.4.3",
+				    "subnet_id": "94daf3aa-6faf-43c0-a21c-9656110b3d11"
+				  },
+				  {
+				    "ip_address": "2001:db8::1",
+				    "subnet_id": "4582d819-7ded-4ec5-aa92-27f73781f625"
+				  }
+				],
+				"network_id": "f3722668-e9e7-41dd-8086-5e1b9f5d8209"
+			      },
+			      "flavor_id": null,
+			      "ha": false,
+			      "id": "a75c645a-6dcc-418c-9371-9be7054c395e",
+			      "name": "router1",
+			      "revision": 8,
+			      "routes": [],
+			      "status": "ACTIVE",
+			      "tenant_id": "222222"
+			    },
+			    {
+			      "admin_state_up": true,
+			      "availability_zone_hints": [],
+			      "availability_zones": [
+				"nova"
+			      ],
+			      "description": "",
+			      "distributed": false,
+			      "external_gateway_info": {
+				"enable_snat": true,
+				"external_fixed_ips": [
+				  {
+				    "ip_address": "172.24.4.3",
+				    "subnet_id": "94daf3aa-6faf-43c0-a21c-9656110b3d11"
+				  },
+				  {
+				    "ip_address": "2001:db8::1",
+				    "subnet_id": "4582d819-7ded-4ec5-aa92-27f73781f625"
+				  }
+				],
+				"network_id": "f3722668-e9e7-41dd-8086-5e1b9f5d8209"
+			      },
+			      "flavor_id": null,
+			      "ha": false,
+			      "id": "a75c645a-6dcc-418c-9371-9be7054c395e",
+			      "name": "router1",
+			      "revision": 8,
+			      "routes": [],
+			      "status": "ACTIVE",
+			      "tenant_id": "222222"
+			    },
+			    {
+			      "admin_state_up": true,
+			      "availability_zone_hints": [],
+			      "availability_zones": [
+				"nova"
+			      ],
+			      "description": "",
+			      "distributed": false,
+			      "external_gateway_info": {
+				"enable_snat": true,
+				"external_fixed_ips": [
+				  {
+				    "ip_address": "172.24.4.3",
+				    "subnet_id": "94daf3aa-6faf-43c0-a21c-9656110b3d11"
+				  },
+				  {
+				    "ip_address": "2001:db8::1",
+				    "subnet_id": "4582d819-7ded-4ec5-aa92-27f73781f625"
+				  }
+				],
+				"network_id": "f3722668-e9e7-41dd-8086-5e1b9f5d8209"
+			      },
+			      "flavor_id": null,
+			      "ha": false,
+			      "id": "a75c645a-6dcc-418c-9371-9be7054c395e",
+			      "name": "router1",
+			      "revision": 8,
+			      "routes": [],
+			      "status": "ACTIVE",
+			      "tenant_id": "222222"
+			    },
+			    {
+			      "admin_state_up": true,
+			      "availability_zone_hints": [],
+			      "availability_zones": [
+				"nova"
+			      ],
+			      "description": "",
+			      "distributed": false,
+			      "external_gateway_info": {
+				"enable_snat": true,
+				"external_fixed_ips": [
+				  {
+				    "ip_address": "172.24.4.3",
+				    "subnet_id": "94daf3aa-6faf-43c0-a21c-9656110b3d11"
+				  },
+				  {
+				    "ip_address": "2001:db8::1",
+				    "subnet_id": "4582d819-7ded-4ec5-aa92-27f73781f625"
+				  }
+				],
+				"network_id": "f3722668-e9e7-41dd-8086-5e1b9f5d8209"
+			      },
+			      "flavor_id": null,
+			      "ha": false,
+			      "id": "a75c645a-6dcc-418c-9371-9be7054c395e",
+			      "name": "router1",
+			      "revision": 8,
+			      "routes": [],
+			      "status": "ACTIVE",
+			      "tenant_id": "222222"
+			    }
+			  ]
+			}
 		`)
 	})
 }
@@ -834,67 +1000,121 @@ func registerPorts(s *TestSuite) {
 		w.WriteHeader(http.StatusOK)
 
 		fmt.Fprintf(w, `
-		{
-			"ports": [
+			{
+			  "ports": [
+			    {
+			      "admin_state_up": true,
+			      "allowed_address_pairs": [],
+			      "binding:host_id": "es-051",
+			      "binding:profile": {},
+			      "binding:vif_details": {
+				"ovs_hybrid_plug": true,
+				"port_filter": true
+			      },
+			      "binding:vif_type": "ovs",
+			      "binding:vnic_type": "normal",
+			      "created_at": "2016-10-20T13:07:02",
+			      "description": "",
+			      "device_id": "dd5dfb24-0e5d-41b1-a4a8-4693906d5f5b",
+			      "device_owner": "compute:nova",
+			      "extra_dhcp_opts": [],
+			      "fixed_ips": [
 				{
-					"status": "ACTIVE",
-					"binding:host_id": "devstack",
-					"name": "",
-					"admin_state_up": true,
-					"network_id": "70c1db1f-b701-45bd-96e0-a313ee3430b3",
-					"tenant_id": "222222",
-					"device_owner": "network:router_gateway",
-					"mac_address": "fa:16:3e:58:42:ed",
-					"fixed_ips": [
-						{
-							"subnet_id": "008ba151-0b8c-4a67-98b5-0d2b87666062",
-							"ip_address": "172.24.4.2"
-						}
-					],
-					"id": "d80b1a3b-4fc1-49f3-952e-1e2ab7081d8b",
-					"security_groups": [],
-					"device_id": "9ae135f4-b6e0-4dad-9e91-3c223e385824"
+				  "ip_address": "fdaf:f360:d434:0:f816:3eff:fe3b:fe08",
+				  "subnet_id": "ef512c07-9203-4121-9df6-e692a4bc84c5"
 				},
 				{
-					"status": "ACTIVE",
-					"binding:host_id": "devstack",
-					"name": "",
-					"admin_state_up": true,
-					"network_id": "70c1db1f-b701-45bd-96e0-a313ee3430b3",
-					"tenant_id": "222222",
-					"device_owner": "network:router_gateway",
-					"mac_address": "fa:16:3e:58:42:ed",
-					"fixed_ips": [
-						{
-							"subnet_id": "008ba151-0b8c-4a67-98b5-0d2b87666062",
-							"ip_address": "172.24.4.2"
-						}
-					],
-					"id": "d80b1a3b-4fc1-49f3-952e-1e2ab7081d8c",
-					"security_groups": [],
-					"device_id": "9ae135f4-b6e0-4dad-9e91-3c223e385824"
-				},
-				{
-					"status": "ACTIVE",
-					"binding:host_id": "devstack",
-					"name": "",
-					"admin_state_up": true,
-					"network_id": "70c1db1f-b701-45bd-96e0-a313ee3430b3",
-					"tenant_id": "222222",
-					"device_owner": "network:router_gateway",
-					"mac_address": "fa:16:3e:58:42:ed",
-					"fixed_ips": [
-						{
-							"subnet_id": "008ba151-0b8c-4a67-98b5-0d2b87666062",
-							"ip_address": "172.24.4.2"
-						}
-					],
-					"id": "d80b1a3b-4fc1-49f3-952e-1e2ab7081d8d",
-					"security_groups": [],
-					"device_id": "9ae135f4-b6e0-4dad-9e91-3c223e385824"
+				  "ip_address": "10.0.0.5",
+				  "subnet_id": "64c8fbe0-cb8a-41d7-9e65-56f33f9674cb"
 				}
-			]
-		}
+			      ],
+			      "id": "004e9c25-de09-4d4c-a2c3-50b05defaac9",
+			      "mac_address": "fa:16:3e:3b:fe:08",
+			      "name": "",
+			      "network_id": "28dd974d-0ec0-43cc-86ac-06773acb126f",
+			      "port_security_enabled": true,
+			      "revision": 10,
+			      "security_groups": [
+				"f47fd611-39d9-4999-9b10-41b19e03d40a"
+			      ],
+			      "status": "ACTIVE",
+			      "tenant_id": "222222",
+			      "updated_at": "2016-10-20T13:07:25"
+			    },
+			    {
+			      "admin_state_up": true,
+			      "allowed_address_pairs": [],
+			      "binding:host_id": "es-051",
+			      "binding:profile": {},
+			      "binding:vif_details": {
+				"ovs_hybrid_plug": true,
+				"port_filter": true
+			      },
+			      "binding:vif_type": "ovs",
+			      "binding:vnic_type": "normal",
+			      "created_at": "2016-10-20T13:07:01",
+			      "description": "",
+			      "device_id": "92fcd563-3605-4cfa-9241-520566d79e68",
+			      "device_owner": "compute:nova",
+			      "extra_dhcp_opts": [],
+			      "fixed_ips": [
+				{
+				  "ip_address": "fdaf:f360:d434:0:f816:3eff:fe17:68b3",
+				  "subnet_id": "ef512c07-9203-4121-9df6-e692a4bc84c5"
+				},
+				{
+				  "ip_address": "10.0.0.7",
+				  "subnet_id": "64c8fbe0-cb8a-41d7-9e65-56f33f9674cb"
+				}
+			      ],
+			      "id": "0a3bdc80-5b3e-4fca-baca-9716d94f56b5",
+			      "mac_address": "fa:16:3e:17:68:b3",
+			      "name": "",
+			      "network_id": "28dd974d-0ec0-43cc-86ac-06773acb126f",
+			      "port_security_enabled": true,
+			      "revision": 8,
+			      "security_groups": [
+				"f47fd611-39d9-4999-9b10-41b19e03d40a"
+			      ],
+			      "status": "ACTIVE",
+			      "tenant_id": "222222",
+			      "updated_at": "2016-10-20T13:07:23"
+			    },
+			    {
+			      "admin_state_up": true,
+			      "allowed_address_pairs": [],
+			      "binding:host_id": "es-051",
+			      "binding:profile": {},
+			      "binding:vif_details": {
+				"ovs_hybrid_plug": true,
+				"port_filter": true
+			      },
+			      "binding:vif_type": "ovs",
+			      "binding:vnic_type": "normal",
+			      "created_at": "2016-09-08T12:01:54",
+			      "description": "",
+			      "device_id": "a75c645a-6dcc-418c-9371-9be7054c395e",
+			      "device_owner": "network:router_interface",
+			      "extra_dhcp_opts": [],
+			      "fixed_ips": [
+				{
+				  "ip_address": "10.0.0.1",
+				  "subnet_id": "64c8fbe0-cb8a-41d7-9e65-56f33f9674cb"
+				}
+			      ],
+			      "id": "11bc164c-c2dd-4809-9b04-0ef4aaefd8a2",
+			      "mac_address": "fa:16:3e:da:6a:9a",
+			      "name": "",
+			      "network_id": "28dd974d-0ec0-43cc-86ac-06773acb126f",
+			      "port_security_enabled": false,
+			      "revision": 8,
+			      "security_groups": [],
+			      "status": "ACTIVE",
+			      "tenant_id": "222222",
+			      "updated_at": "2016-10-20T13:07:23"
+			    }
+			  ]
+			}
       `)
 	})
 }
@@ -911,24 +1131,24 @@ func registerFloatingIPs(s *TestSuite) {
 		{
 			"floatingips": [
 				{
-					"floating_network_id": "6d67c30a-ddb4-49a1-bec3-a65b286b4170",
+					"floating_network_id": "28dc974d-0ec0-43cc-86ac-06773acb126f",
 					"router_id": null,
 					"fixed_ip_address": null,
 					"floating_ip_address": "192.0.0.4",
 					"tenant_id": "222222",
 					"status": "DOWN",
-					"port_id": null,
-					"id": "2f95fd2b-9f6a-4e8e-9e9a-2cbe286cbf9e"
+					"port_id": "0a3bdc81-5b3e-4fca-baca-9716d94f56b5",
+					"id": "a75c645a-6dcd-418c-9371-9be7054c395e"
 				},
 				{
-					"floating_network_id": "90f742b1-6d17-487b-ba95-71881dbc0b64",
+					"floating_network_id": "ef51217-9203-4121-9df6-e692a4bc84c5",
 					"router_id": "0a24cb83-faf5-4d7f-b723-3144ed8a2167",
 					"fixed_ip_address": "192.0.0.2",
 					"floating_ip_address": "10.0.0.3",
 					"tenant_id": "222222",
 					"status": "DOWN",
-					"port_id": "74a342ce-8e07-4e91-880c-9f834b68fa25",
-					"id": "ada25a95-f321-4f59-b0e0-f3a970dd3d63"
+					"port_id": "004e9c25-de19-4d4c-a2c3-50b05defaac9",
+					"id": "bfdd31f8-ccda-4722-9319-13a7138e226c"
 				}
 			]
 		}
