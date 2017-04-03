@@ -39,7 +39,7 @@ import (
 
 const (
 	// version of neutron plugin
-	version = 2
+	version = 3
 
 	//vendor namespace part
 	vendor = "intel"
@@ -207,13 +207,23 @@ func (c *Collector) GetMetricTypes(cfg plugin.ConfigType) ([]plugin.MetricType, 
 	if err != nil {
 		return nil, err
 	}
+	domain_name := ""
+	domain_id := ""
+
 	endpoint := items[cfgURL].(string)
 	user := items[cfgUser].(string)
 	password := items[cfgPassword].(string)
 	tenant := items[cfgTenant].(string)
-
+	dom_name, _ := config.GetConfigItem(cfg, "domain_name")
+	dom_id, _ := config.GetConfigItem(cfg, "domain_id")
+	if dom_name != nil {
+		domain_name = dom_name.(string)
+	}
+	if dom_id != nil {
+		domain_id = dom_id.(string)
+	}
 	if c.provider == nil {
-		provider, serr := openstackintel.Authenticate(endpoint, user, password, tenant)
+		provider, serr := openstackintel.Authenticate(endpoint, user, password, tenant, domain_name, domain_id)
 		if serr != nil {
 			log.WithFields(serr.Fields()).Warn(serr.Error())
 			return nil, serr
@@ -276,13 +286,24 @@ func (c *Collector) CollectMetrics(metricTypes []plugin.MetricType) ([]plugin.Me
 		return nil, err
 	}
 
+	domain_name := ""
+	domain_id := ""
+
 	endpoint := items[cfgURL].(string)
 	user := items[cfgUser].(string)
 	password := items[cfgPassword].(string)
 	tenant := items[cfgTenant].(string)
+	dom_name, _ := config.GetConfigItem(metricTypes[0], "domain_name")
+	dom_id, _ := config.GetConfigItem(metricTypes[0], "domain_id")
+	if dom_name != nil {
+		domain_name = dom_name.(string)
+	}
+	if dom_id != nil {
+		domain_id = dom_id.(string)
+	}
 
 	if c.provider == nil {
-		provider, serr := openstackintel.Authenticate(endpoint, user, password, tenant)
+		provider, serr := openstackintel.Authenticate(endpoint, user, password, tenant, domain_name, domain_id)
 		if serr != nil {
 			log.WithFields(serr.Fields()).Warn(serr.Error())
 			return nil, serr

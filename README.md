@@ -63,6 +63,9 @@ Global configuration files are described in [Snap's documentation](https://githu
 - `"openstack_user"` - user name used to authenticate (ex. `"admin"`)
 - `"openstack_password"`- password used to authenticate (ex. `"admin"`)
 - `"openstack_tenant"` - tenant name used to authenticate (ex. `"admin"`)
+If you're using authentication API in v3 you need to set one of those two configuration options:
+- `"domain_name"` - domain name
+- `"domain_id"` - domain name
 
 Example global configuration file for snap-plugin-collector-neutron plugin (exemplary file in [examples/cfg/] (https://github.com/intelsdi-x/snap-plugin-collector-neutron/blob/master/examples/cfg/):
 
