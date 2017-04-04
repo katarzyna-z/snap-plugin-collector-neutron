@@ -67,7 +67,7 @@ func (s *TestSuite) TestGetAllTenants() {
 	Convey("Given list of OpenStack tenants is requested", s.T(), func() {
 
 		Convey("When authentication is required", func() {
-			provider, err := Authenticate(th.Endpoint(), "me", "secret", "admin")
+			provider, err := Authenticate(th.Endpoint(), "me", "secret", "admin", "", "")
 			th.AssertNoErr(s.T(), err)
 			th.CheckEquals(s.T(), s.Token, provider.TokenID)
 
@@ -93,7 +93,7 @@ func (s *TestSuite) TestGetNetworkCountPerTenant() {
 	Convey("Number of OpenStack networks per tenant is requested", s.T(), func() {
 
 		Convey("When authentication is required", func() {
-			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin")
+			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin", "", "")
 			th.AssertNoErr(s.T(), serr)
 			th.CheckEquals(s.T(), s.Token, provider.TokenID)
 			identityClient := openstackgophercloud.NewIdentityV2(provider)
@@ -126,7 +126,7 @@ func (s *TestSuite) TestGetSubnetsCountPerTenant() {
 	Convey("Number of OpenStack subnets per tenant is requested", s.T(), func() {
 
 		Convey("When authentication is required", func() {
-			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin")
+			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin", "", "")
 			th.AssertNoErr(s.T(), serr)
 			th.CheckEquals(s.T(), s.Token, provider.TokenID)
 			identityClient := openstackgophercloud.NewIdentityV2(provider)
@@ -158,7 +158,7 @@ func (s *TestSuite) TestGetRoutersCountPerTenant() {
 	Convey("Number of OpenStack routers per tenant is requested", s.T(), func() {
 
 		Convey("When authentication is required", func() {
-			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin")
+			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin", "", "")
 			th.AssertNoErr(s.T(), serr)
 			th.CheckEquals(s.T(), s.Token, provider.TokenID)
 			identityClient := openstackgophercloud.NewIdentityV2(provider)
@@ -190,7 +190,7 @@ func (s *TestSuite) TestGetPortsCountPerTenant() {
 	Convey("Number of OpenStack ports per tenant is requested", s.T(), func() {
 
 		Convey("When authentication is required", func() {
-			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin")
+			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin", "", "")
 			th.AssertNoErr(s.T(), serr)
 			th.CheckEquals(s.T(), s.Token, provider.TokenID)
 			identityClient := openstackgophercloud.NewIdentityV2(provider)
@@ -222,7 +222,7 @@ func (s *TestSuite) TestGetFloatingIPsCountPerTenant() {
 	Convey("Number of OpenStack floating IPs per tenant is requested", s.T(), func() {
 
 		Convey("When authentication is required", func() {
-			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin")
+			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin", "", "")
 			th.AssertNoErr(s.T(), serr)
 			th.CheckEquals(s.T(), s.Token, provider.TokenID)
 			identityClient := openstackgophercloud.NewIdentityV2(provider)
@@ -253,7 +253,7 @@ func (s *TestSuite) TestGetQuotasPerTenant() {
 	Convey("Given list of OpenStack quotas per tenant is requested", s.T(), func() {
 
 		Convey("When authentication is required", func() {
-			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin")
+			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin", "", "")
 			th.AssertNoErr(s.T(), serr)
 			th.CheckEquals(s.T(), s.Token, provider.TokenID)
 			identityClient := openstackgophercloud.NewIdentityV2(provider)
@@ -298,7 +298,7 @@ func (s *TestSuite) TestGetQuotasForTenant() {
 	Convey("Given list of OpenStack quotas for particular is requested", s.T(), func() {
 
 		Convey("When authentication is required", func() {
-			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin")
+			provider, serr := Authenticate(th.Endpoint(), "me", "secret", "admin", "", "")
 			th.AssertNoErr(s.T(), serr)
 			th.CheckEquals(s.T(), s.Token, provider.TokenID)
 
