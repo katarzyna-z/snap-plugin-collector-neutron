@@ -251,7 +251,7 @@ func (c *Collector) GetMetricTypes(cfg plugin.ConfigType) ([]plugin.MetricType, 
 		q, serr := openstackintel.GetQuotasForTenant(networkClient, tenant.ID)
 		if serr != nil {
 			log.WithFields(serr.Fields()).Warn(serr.Error())
-			return nil, serr
+			//return nil, serr
 		}
 
 		for k := range q {
@@ -332,7 +332,7 @@ func (c *Collector) CollectMetrics(metricTypes []plugin.MetricType) ([]plugin.Me
 		tenantNetworks, serr = openstackintel.GetNetworkCountPerTenant(networkClient, tenantList)
 		if serr != nil {
 			log.WithFields(serr.Fields()).Warn(serr.Error())
-			panic(serr)
+			//panic(serr)
 		}
 		done.Done()
 	}()
@@ -343,7 +343,7 @@ func (c *Collector) CollectMetrics(metricTypes []plugin.MetricType) ([]plugin.Me
 		tenantSubnets, serr = openstackintel.GetSubnetsCountPerTenant(networkClient, tenantList)
 		if serr != nil {
 			log.WithFields(serr.Fields()).Warn(serr.Error())
-			panic(serr)
+			//panic(serr)
 		}
 		done.Done()
 	}()
@@ -354,7 +354,7 @@ func (c *Collector) CollectMetrics(metricTypes []plugin.MetricType) ([]plugin.Me
 		tenantRouters, serr = openstackintel.GetRoutersCountPerTenant(networkClient, tenantList)
 		if serr != nil {
 			log.WithFields(serr.Fields()).Warn(serr.Error())
-			panic(serr)
+			//panic(serr)
 		}
 		done.Done()
 	}()
@@ -365,7 +365,7 @@ func (c *Collector) CollectMetrics(metricTypes []plugin.MetricType) ([]plugin.Me
 		tenantPorts, serr = openstackintel.GetPortsCountPerTenant(networkClient, tenantList)
 		if serr != nil {
 			log.WithFields(serr.Fields()).Warn(serr.Error())
-			panic(serr)
+			//panic(serr)
 		}
 		done.Done()
 	}()
@@ -376,7 +376,7 @@ func (c *Collector) CollectMetrics(metricTypes []plugin.MetricType) ([]plugin.Me
 		tenantFloatingips, serr = openstackintel.GetFloatingIPsCountPerTenant(networkClient, tenantList)
 		if serr != nil {
 			log.WithFields(serr.Fields()).Warn(serr.Error())
-			panic(serr)
+			//panic(serr)
 		}
 		done.Done()
 	}()
@@ -387,7 +387,7 @@ func (c *Collector) CollectMetrics(metricTypes []plugin.MetricType) ([]plugin.Me
 		tenantQuotasList, serr = openstackintel.GetQuotasPerTenant(networkClient, tenantList)
 		if serr != nil {
 			log.WithFields(serr.Fields()).Warn(serr.Error())
-			panic(err)
+			//panic(err)
 		}
 		done.Done()
 	}()
